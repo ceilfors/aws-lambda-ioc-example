@@ -1,13 +1,10 @@
-module.exports.deps = deps = {
-  userService: require('./user-service')()
-}
+const deps = module.exports.deps = {}
+deps.userRepository = require('./user-repository')()
+deps.userService = require('./user-service')(deps.userRepository)
 
 module.exports.handler = (event, callback) => {
   const {userService} = deps
   const result = userService.login(event.username, event.password)
-  if (result) {
-    callback(null, 'logged in')
-  } else {
-    callback(null, 'wrong password')
-  }
+  const callbackResult = result === 'success' ? 200 : 404
+  callback(null, callbackResult)
 }
