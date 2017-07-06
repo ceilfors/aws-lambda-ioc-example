@@ -8,7 +8,7 @@ const sinon = require('sinon')
 const {deps, handler} = require('../src/lambda')
 
 describe('lambda', () => {
-  it('returns "200" if a user credentials is valid', () => {
+  it('should return "200" if a user credentials is valid', () => {
     deps.userService = ({
       login: () => 'success'
     })
@@ -18,7 +18,7 @@ describe('lambda', () => {
     callback.should.have.been.calledWith(null, 200)
   })
 
-  it('returns "404" if a user credentials is invalid', () => {
+  it('should return "404" if a user credentials is invalid', () => {
     deps.userService = ({
       login: () => 'invalid'
     })
