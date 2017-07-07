@@ -1,6 +1,6 @@
 const deps = module.exports.deps = {}
-deps.userRepository = require('./user-repository')()
-deps.userService = require('./user-service')(deps.userRepository)
+deps.userRepository = require('./hardcoded-user-repository')()
+deps.userService = require('./simple-user-service')(deps.userRepository)
 
 module.exports.handler = (event, callback) => {
   const {userService} = deps

@@ -11,7 +11,7 @@ describe('user-service', () => {
 
   before(() => {
     userRepository = { find: sinon.stub() }
-    subject = require('../src/user-service')(userRepository)
+    subject = require('../src/simple-user-service')(userRepository)
   })
 
   it('should return "success" if a user is found in the database', () => {
