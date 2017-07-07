@@ -5,9 +5,9 @@ var sinonChai = require('sinon-chai')
 chai.should()
 chai.use(sinonChai)
 const sinon = require('sinon')
-const {deps, handler} = require('../src/lambda')
+const {deps, handler} = require('../src/login')
 
-describe('lambda', () => {
+describe('login lambda', () => {
   it('should return "200" if a user credentials is valid', () => {
     deps.userService = {
       login: () => 'success'
