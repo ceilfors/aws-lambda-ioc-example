@@ -1,30 +1,32 @@
 /* eslint-env mocha */
 
-var chai = require('chai')
-var sinonChai = require('sinon-chai')
-chai.should()
+const chai = require('chai')
+const sinonChai = require('sinon-chai')
 chai.use(sinonChai)
 const sinon = require('sinon')
-const {deps, handler} = require('../src/login')
+const expect = chai.expect
 
 describe('login lambda', () => {
-  it('should return "200" if a user credentials is valid', () => {
-    deps.userService = {
-      login: () => 'success'
-    }
-    const callback = sinon.spy()
-    handler({username: 'any', password: 'any'}, callback)
+  let userService, subject, callback
 
-    callback.should.have.been.calledWith(null, 200)
+  before(() => {
+    let {deps, handler} = require('../src/login')
+    subject = handler
+    userService = deps.userService = { login: sinon.stub() }
+    callback = sinon.spy()
+  })
+
+  it('should return "200" if a user credentials is valid', () => {
+    userService.login.returns('success')
+    subject({username: 'any', password: 'any'}, callback)
+
+    expect(callback).to.have.been.calledWith(null, 200)
   })
 
   it('should return "404" if a user credentials is invalid', () => {
-    deps.userService = {
-      login: () => 'invalid'
-    }
-    const callback = sinon.spy()
-    handler({username: 'any', password: 'any'}, callback)
+    userService.login.returns('invalid')
+    subject({username: 'any', password: 'any'}, callback)
 
-    callback.should.have.been.calledWith(null, 404)
+    expect(callback).to.have.been.calledWith(null, 404)
   })
 })

@@ -1,14 +1,13 @@
 /* eslint-env mocha */
 
-var chai = require('chai')
-var sinonChai = require('sinon-chai')
+const chai = require('chai')
+const sinonChai = require('sinon-chai')
 chai.use(sinonChai)
 const sinon = require('sinon')
 const expect = chai.expect
 
 describe('user-service', () => {
-  let userRepository
-  let subject
+  let userRepository, subject
 
   before(() => {
     userRepository = { find: sinon.stub() }

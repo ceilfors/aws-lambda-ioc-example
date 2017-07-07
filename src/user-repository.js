@@ -2,7 +2,7 @@ const db = {
   'user': 'secret'
 }
 
-module.exports = (userRepository) => {
+module.exports = () => {
   return {
     find: (username, password) => db[username] === password
   }
