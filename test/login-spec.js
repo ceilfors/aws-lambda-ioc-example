@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 
-const chai = require('chai')
-const sinonChai = require('sinon-chai')
-chai.use(sinonChai)
 const sinon = require('sinon')
+const sinonChai = require('sinon-chai')
+const chai = require('chai')
+chai.use(sinonChai)
 const expect = chai.expect
 
 describe('login lambda', () => {
@@ -17,16 +17,16 @@ describe('login lambda', () => {
   })
 
   it('should return "200" if a user credentials is valid', () => {
-    userService.login.returns('success')
-    subject({username: 'any', password: 'any'}, callback)
-
-    expect(callback).to.have.been.calledWith(null, 200)
+    userService.login.returns(Promise.resolve('success'))
+    return subject({username: 'any', password: 'any'}, callback).then(_ => {
+      expect(callback).to.have.been.calledWith(null, 200)
+    })
   })
 
   it('should return "404" if a user credentials is invalid', () => {
-    userService.login.returns('invalid')
-    subject({username: 'any', password: 'any'}, callback)
-
-    expect(callback).to.have.been.calledWith(null, 404)
+    userService.login.returns(Promise.resolve('invalid'))
+    return subject({username: 'any', password: 'any'}, callback).then(_ => {
+      expect(callback).to.have.been.calledWith(null, 404)
+    })
   })
 })

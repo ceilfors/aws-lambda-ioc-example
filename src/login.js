@@ -4,7 +4,6 @@ deps.userService = require('./simple-user-service')(deps.userRepository)
 
 module.exports.handler = (event, callback) => {
   const {userService} = deps
-  const result = userService.login(event.username, event.password)
-  const callbackResult = result === 'success' ? 200 : 404
-  callback(null, callbackResult)
+  return userService.login(event.username, event.password)
+    .then(result => callback(null, result === 'success' ? 200 : 404))
 }

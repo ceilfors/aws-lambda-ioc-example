@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 
-const chai = require('chai')
-const sinonChai = require('sinon-chai')
-chai.use(sinonChai)
 const sinon = require('sinon')
+const chaiAsPromised = require('chai-as-promised')
+const chai = require('chai')
+chai.use(chaiAsPromised)
 const expect = chai.expect
 
 describe('user-service', () => {
@@ -15,16 +15,14 @@ describe('user-service', () => {
   })
 
   it('should return "success" if a user is found in the database', () => {
-    userRepository.find.returns({})
+    userRepository.find.returns(Promise.resolve({}))
     const result = subject.login('user', 'secret')
-
-    expect(result).to.equal('success')
+    return expect(result).to.eventually.equal('success')
   })
 
   it('should return "invalid credentials" if a user is not found in the database', () => {
-    userRepository.find.returns(undefined)
+    userRepository.find.returns(Promise.resolve(undefined))
     const result = subject.login('user', 'secret')
-
-    expect(result).to.equal('invalid credentials')
+    return expect(result).to.eventually.equal('invalid credentials')
   })
 })
