@@ -18,14 +18,14 @@ describe('login lambda', () => {
 
   it('should return "200" if a user credentials is valid', () => {
     userService.login.returns(Promise.resolve('success'))
-    return subject({username: 'any', password: 'any'}, callback).then(_ => {
+    return subject({username: 'any', password: 'any'}, {}, callback).then(_ => {
       expect(callback).to.have.been.calledWith(null, 200)
     })
   })
 
   it('should return "404" if a user credentials is invalid', () => {
     userService.login.returns(Promise.resolve('invalid'))
-    return subject({username: 'any', password: 'any'}, callback).then(_ => {
+    return subject({username: 'any', password: 'any'}, {}, callback).then(_ => {
       expect(callback).to.have.been.calledWith(null, 404)
     })
   })

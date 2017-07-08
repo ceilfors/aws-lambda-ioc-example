@@ -21,7 +21,7 @@ describe('user-service', () => {
   })
 
   it('should return "invalid credentials" if a user is not found in the database', () => {
-    userRepository.find.returns(Promise.resolve(undefined))
+    userRepository.find.returns(Promise.resolve(null))
     const result = subject.login('user', 'secret')
     return expect(result).to.eventually.equal('invalid credentials')
   })

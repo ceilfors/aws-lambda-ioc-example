@@ -4,6 +4,6 @@ const db = {
 
 module.exports = () => {
   return {
-    find: (username, password) => Promise.resolve(db[username] === password)
+    find: (username, password) => Promise.resolve(db[username] === password ? db[username] : null)
   }
 }
